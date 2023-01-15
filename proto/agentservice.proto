@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package pb;
+option go_package = ".gen/agent;agent";
+option java_multiple_files = true;
+option java_package = "vn.unicloud.hyperqueue";
+option java_outer_classname = "AgentQueueProto";
+
+
+message Empty{
+
+}
+message Agent{
+    string message = 1;
+}
+
+message Boolean {
+    bool value = 1;
+}
+
+service AgentQueue{
+    rpc Insert (Agent) returns (Empty){}
+    rpc Delete (Agent) returns (Empty){}
+    rpc Poll (Empty) returns (Agent){}
+    rpc List (Empty) returns (stream Agent){}
+    rpc ContainsNode (Agent) returns (Boolean){}
+}

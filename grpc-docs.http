@@ -1,0 +1,13 @@
+
+###
+GRPC localhost:5050/pb.AgentQueue/Insert
+
+{
+  "message": "3"
+}
+
+###
+GRPC localhost:5050/pb.AgentQueue/Poll
+
+###
+GRPC localhost:5050/pb.AgentQueue/List
