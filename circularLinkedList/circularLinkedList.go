@@ -1,4 +1,4 @@
-package circular_linked_list
+package circularLinkedList
 
 import (
 	"fmt"

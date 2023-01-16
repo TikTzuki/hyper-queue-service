@@ -11,7 +11,11 @@ message Empty{
 
 }
 message Agent{
-    string message = 1;
+    string id = 1;
+    string cif = 2;
+    string name = 3;
+    uint32 agentState = 4;
+    string topic = 5;
 }
 
 message Boolean {

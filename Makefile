@@ -7,12 +7,14 @@ setup:
 	rm -rf /usr/local/go && tar -C /usr/local -xzf go1.19.5.linux-amd64.tar.gz
 	export PATH=$PATH:/usr/local/go/bin
 	go version
+	go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
+	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
 	apt install -y protobuf-compiler || true
 	protoc --version
 gen:
-	mkdir ${gen_dir}
-	mkdir ${hello}
-	mkdir ${agent}
+	mkdir ${gen_dir} || true
+	mkdir ${hello} || true
+	mkdir ${agent} || true
 	protoc --proto_path=proto \
 --go_out=${hello} --go_opt=paths=source_relative  \
 --go-grpc_out=${hello} --go-grpc_opt=paths=source_relative \

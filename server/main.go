@@ -8,7 +8,7 @@ import (
 	"log"
 	"net"
 	pb "org/tik/hyper-queue-service/.gen/agent"
-	cll "org/tik/hyper-queue-service/circular-linked-list"
+	cll "org/tik/hyper-queue-service/circularLinkedList"
 )
 
 var (
