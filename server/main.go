@@ -7,7 +7,7 @@ import (
 	"google.golang.org/grpc"
 	"log"
 	"net"
-	pb "org/tik/hyper-queue-service/.gen/agent"
+	pb "org/tik/hyper-queue-service/.gen/agent/queue/circular/agent"
 	cll "org/tik/hyper-queue-service/circularLinkedList"
 )
 
@@ -17,18 +17,18 @@ var (
 
 type server struct {
 	pb.UnimplementedAgentQueueServer
-	list cll.CircularLinkedList[pb.Agent]
+	list cll.CircularLinkedList[pb.GAgent]
 }
 
-func (s *server) Insert(ctx context.Context, agent *pb.Agent) (*pb.Empty, error) {
+func (s *server) Insert(ctx context.Context, agent *pb.GAgent) (*pb.Empty, error) {
 	log.Printf("add agent: %v", agent)
 	s.list.Insert(*agent)
 	return &pb.Empty{}, nil
 }
 
-func (s *server) Poll(ctx context.Context, empty *pb.Empty) (*pb.Agent, error) {
+func (s *server) Poll(ctx context.Context, empty *pb.Empty) (*pb.GAgent, error) {
 	a := s.list.Poll()
-	log.Printf("poll agent: %v", &a)
+	log.Printf("poll agent: %v", a.IsFound)
 	return &a, nil
 }
 func (s *server) List(empty *pb.Empty, stream pb.AgentQueue_ListServer) error {

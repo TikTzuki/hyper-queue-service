@@ -3,7 +3,11 @@
 GRPC localhost:5050/pb.AgentQueue/Insert
 
 {
-  "message": "3"
+  "isFound": true,
+  "name": "string",
+  "agentState": 0,
+  "cif": "string",
+  "id": "1"
 }
 
 ###

@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package pb;
+option go_package = ".gen/agent;agent";
+option java_multiple_files = true;
+option java_package = "vn.unicloud.hyperqueue";
+option java_outer_classname = "AgentQueueProto";
+
+enum GAgentState {
+  NONE = 0;
+  FREE = 1;
+  BUSY = 2;
+  OFFLINE = 3;
+  ACQUIRING = 4;
+}
+
+message Empty{
+
+}
+message GAgent{
+  bool isFound = 1;
+  string id = 2;
+  string cif = 3;
+  string name = 4;
+  GAgentState agentState = 5;
+  string topic = 6;
+}
+
+message GBoolean {
+  bool value = 1;
+}
+
+service AgentQueue{
+  rpc Insert (GAgent) returns (Empty){}
+  rpc Delete (GAgent) returns (Empty){}
+  rpc Poll (Empty) returns (GAgent){}
+  rpc List (Empty) returns (stream GAgent){}
+  rpc ContainsNode (GAgent) returns (GBoolean){}
+}
