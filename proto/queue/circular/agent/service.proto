@@ -30,9 +30,14 @@ message GBoolean {
   bool value = 1;
 }
 
+message DeleteByIdRequest {
+  string id = 1;
+}
+
 service AgentQueue{
   rpc Insert (GAgent) returns (Empty){}
   rpc Delete (GAgent) returns (Empty){}
+  rpc DeleteById (DeleteByIdRequest) returns (Empty){}
   rpc Poll (Empty) returns (GAgent){}
   rpc List (Empty) returns (stream GAgent){}
   rpc ContainsNode (GAgent) returns (GBoolean){}

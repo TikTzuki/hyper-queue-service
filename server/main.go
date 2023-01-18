@@ -9,6 +9,7 @@ import (
 	"net"
 	pb "org/tik/hyper-queue-service/.gen/agent/queue/circular/agent"
 	cll "org/tik/hyper-queue-service/circularLinkedList"
+	"org/tik/hyper-queue-service/utils"
 )
 
 var (
@@ -28,7 +29,7 @@ func (s *server) Insert(ctx context.Context, agent *pb.GAgent) (*pb.Empty, error
 
 func (s *server) Poll(ctx context.Context, empty *pb.Empty) (*pb.GAgent, error) {
 	a := s.list.Poll()
-	log.Printf("poll agent: %v", a.IsFound)
+	log.Printf("poll agent: %v", &a)
 	return &a, nil
 }
 func (s *server) List(empty *pb.Empty, stream pb.AgentQueue_ListServer) error {
@@ -39,6 +40,14 @@ func (s *server) List(empty *pb.Empty, stream pb.AgentQueue_ListServer) error {
 		}
 	}
 	return nil
+}
+
+func (s *server) DeleteById(ctx context.Context, request *pb.DeleteByIdRequest) (*pb.Empty, error) {
+	log.Printf("delete agent: %v", request.Id)
+	s.list.DeleteByComparator(func(value any) bool {
+		return utils.IsEqual(value, request.Id)
+	})
+	return &pb.Empty{}, nil
 }
 
 func main() {

@@ -78,6 +78,31 @@ func (this *CircularLinkedList[T]) Delete(value T) {
 		current = next
 	}
 }
+func (this *CircularLinkedList[T]) DeleteByComparator(comparator utils.Comparator) {
+	current := this.head
+	if this.head == nil {
+		return
+	}
+	for ok := true; ok; ok = !(current == this.head) {
+		next := current.next
+		if comparator(next.value) {
+			if this.tail == this.head {
+				this.tail = nil
+				this.head = nil
+			} else {
+				current.next = next.next
+				if this.head == next { // deleteing the head
+					this.head = this.head.next
+				}
+				if this.tail == next { // deleting the tail
+					this.tail = current
+				}
+			}
+			break
+		}
+		current = next
+	}
+}
 
 func (this *CircularLinkedList[T]) Poll() T {
 	// var currentValue interface{}

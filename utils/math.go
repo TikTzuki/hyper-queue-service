@@ -6,3 +6,5 @@ func IsEqual(a interface{}, b interface{}) bool {
 	}
 	return false
 }
+
+type Comparator func(value any) bool
